@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 export default function App() {
 
@@ -34,11 +35,21 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
-      <View style={styles.container}>
-          {dados.map((item)=>
+      
+      <FlatList
+      style={{width:'100%', flex:1}}
+      data={dados}
+      keyExtractor={(item)=>item.id.toString()}
+      renderItem={({item})=>(
+        <View style={styles.card} >
+            <Image source={{uri:item.image}} style={{width:50, height:50}} />
             <Text>{item.title}</Text>
-          )}
-      </View>
+            <Text>{item.price}</Text>
+
+        </View>
+      )}
+
+      ></FlatList>
       <StatusBar style="auto" />
     </View>
   );
@@ -48,7 +59,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  card: {
+    flexDirection: 'column',
+    color:'#fff',
+    elevation: 8,
+    padding: 16,
+    width:'100%'
+  }
 });
